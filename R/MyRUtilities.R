@@ -1,14 +1,14 @@
-#' Hello, world!
+#' Package of my utility functions
 #'
-#' @name MyRUtilities
+#' @name myutils
 NULL
 
-#' Hello world
+
 # ***********************************
-# * IO Clipboard ----
+# IO Clipboard ----
 # ***********************************
 
-#' Retrieve clipboard data by using `utils::read.table()`
+#' Read clipboard as a data frame by using `utils::read.table()`
 #'
 #' @param header If TRUE, retrieved data contains a header
 #' @return A data frame containing clipboard data
@@ -42,3 +42,9 @@ wcbmat = function(data, header, sep="\t", size=128, row.names=FALSE, qmethod="do
   utils::write.table(data, file=fn, sep=sep, row.names=row.names,
                      col.names=col.names, qmethod=qmethod, ...)
 }
+
+
+
+
+
+

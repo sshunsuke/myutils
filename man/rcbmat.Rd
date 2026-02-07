@@ -2,8 +2,7 @@
 % Please edit documentation in R/MyRUtilities.R
 \name{rcbmat}
 \alias{rcbmat}
-\title{Hello world
-Retrieve clipboard data by using \code{utils::read.table()}}
+\title{Read clipboard as a data frame by using \code{utils::read.table()}}
 \usage{
 rcbmat(header, ...)
 }
@@ -14,6 +13,5 @@ rcbmat(header, ...)
 A data frame containing clipboard data
 }
 \description{
-Hello world
-Retrieve clipboard data by using \code{utils::read.table()}
+Read clipboard as a data frame by using \code{utils::read.table()}
 }
