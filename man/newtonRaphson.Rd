@@ -23,3 +23,9 @@ root of \code{fun}
 \description{
 Newton-Raphson method
 }
+\seealso{
+\itemize{
+\item \code{\link[=bisection]{bisection()}}
+\item \code{\link[=uniroot]{uniroot()}}
+}
+}

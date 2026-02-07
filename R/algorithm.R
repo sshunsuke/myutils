@@ -12,6 +12,9 @@
 #' @return root of `fun`
 #'
 #' @export
+#' @seealso
+#' * [bisection()]
+#' * [uniroot()]
 #' @md
 newtonRaphson = function(fun, dFun, fD_0, tol=1e-10, itMax=10) {
   it <- 0
@@ -30,6 +33,52 @@ newtonRaphson = function(fun, dFun, fD_0, tol=1e-10, itMax=10) {
 
   fD_n
 }
+
+
+
+#' Bisection Method
+#' @param f  function returning a real value
+#' @param rangeFrom minimum value of range
+#' @param rangeFrom maximum value of range
+#' @return root
+bisection <- function(f, rangeFrom, rangeTo, itMax = 100, tol = 1e-7) {
+  # Check arguments.
+  if (rangeFrom >= rangeTo) {
+    stop("'rangeFrom' must be smaller than 'rangeTo'.")
+  } else if (f(rangeFrom) * f(rangeTo) >= 0) {
+    stop('the sign of f(rangeFrom) must be different from that of f(rangeTo)')
+  }
+
+  a <- rangeFrom
+  b <- rangeTo
+  c <- a
+
+  for (i in 1:itMax) {
+    c <- (a + b) / 2 # Calculate midpoint
+
+    # If the function equals 0 at the midpoint or the midpoint is below the desired tolerance, stop the
+    # function and return the root.
+    if (abs(f(c)) < tol) {
+      break
+    }
+
+    # If another iteration is required,
+    # check the signs of the function at the points c and a and reassign
+    # a or b accordingly as the midpoint to be used in the next iteration.
+    if (sign(f(c)) == sign(f(a))) {
+      a <- c
+    } else {
+      b <- c
+    }
+  }
+
+  if (i >= itMax) {
+    print('Too many iterations')
+  }
+
+  return(c)
+}
+
 
 
 
@@ -56,7 +105,6 @@ gcd <- (function(){
 })()
 
 ## lcm ----
-
 
 
 #' Least Common Multiple
