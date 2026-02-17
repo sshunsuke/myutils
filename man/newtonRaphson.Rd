@@ -4,14 +4,14 @@
 \alias{newtonRaphson}
 \title{Newton-Raphson method}
 \usage{
-newtonRaphson(fun, dFun, fD_0, tol = 1e-10, itMax = 10)
+newtonRaphson(fun, dFun, x_0, tol = 1e-10, itMax = 10)
 }
 \arguments{
 \item{fun}{function returning a real value}
 
 \item{dFun}{derivative of \code{fun}}
 
-\item{fD_0}{initial value of the argument of \code{fun}}
+\item{x_0}{initial value of the argument of \code{fun}}
 
 \item{tol}{desired accuracy (convergence tolerance)}
 
@@ -26,6 +26,5 @@ Newton-Raphson method
 \seealso{
 \itemize{
 \item \code{\link[=bisection]{bisection()}}
-\item \code{\link[=uniroot]{uniroot()}}
 }
 }

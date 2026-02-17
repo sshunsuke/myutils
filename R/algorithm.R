@@ -6,7 +6,7 @@
 #'
 #' @param fun  function returning a real value
 #' @param dFun derivative of `fun`
-#' @param fD_0 initial value of the argument of `fun`
+#' @param x_0 initial value of the argument of `fun`
 #' @param tol  desired accuracy (convergence tolerance)
 #' @param itMax the maximum number of iterations
 #' @return root of `fun`
@@ -14,12 +14,11 @@
 #' @export
 #' @seealso
 #' * [bisection()]
-#' * [uniroot()]
 #' @md
-newtonRaphson = function(fun, dFun, fD_0, tol=1e-10, itMax=10) {
+newtonRaphson = function(fun, dFun, x_0, tol=1e-10, itMax=10) {
   it <- 0
-  fD_n <- fD_0
-  d <- fun(fD_n) / dFun(fD_n)
+  x_n <- x_0
+  d <- fun(x_n) / dFun(x_n)
 
   while (abs(d) >= tol) {
     it <- it + 1
@@ -27,11 +26,11 @@ newtonRaphson = function(fun, dFun, fD_0, tol=1e-10, itMax=10) {
       stop("Calculation did not converge.")
     }
 
-    d <- fun(fD_n) / dFun(fD_n)
-    fD_n <- fD_n - d
+    d <- fun(x_n) / dFun(x_n)
+    x_n <- x_n - d
   }
 
-  fD_n
+  x_n
 }
 
 
@@ -112,7 +111,7 @@ gcd <- (function(){
 #' @param b a natural number
 #' @return least common multiple
 #' @export
-lcm <- (function(){
+lcm_ <- (function(){
   function(...){ Reduce(function(a, b){
     a * b / myutils:::gcd(a,b)
   }, c(...)) }

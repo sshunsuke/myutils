@@ -18,9 +18,11 @@ fD_laminar <- function(Re) { 64 / Re }
 #' Blasius correlation to calculate Darcy friction factor
 #' @param Re Reynolds number
 #' @return Darcy friction factor
+#' @export
 fD_Blasius <- function(Re, C=0.3164) { C / (Re ^ 0.25) }
 
-
+#' Colebrook correlation to calculate Darcy friction factor
+#' @export
 fD_Colebrook <- function(roughness, D, Re, tol=1e-8, itMax=10, warn=TRUE) {
   core_ <- function(roughness, D, Re) {
     if (Re <= 4000 && (warn == TRUE)) { warning("Re <= 4000 !") }
@@ -36,7 +38,7 @@ fD_Colebrook <- function(roughness, D, Re, tol=1e-8, itMax=10, warn=TRUE) {
 
     # Newton-Raphson method
     fD_0 <- myutils:::fD_Blasius(Re)
-    fD_n <- UTIL$newtonRaphson(fun, dFun, fD_0, tol=tol, itMax=itMax)
+    fD_n <- myutils:::newtonRaphson(fun, dFun, fD_0, tol=tol, itMax=itMax)
     fD_n
   }
   mapply(core_, roughness, D, Re)
