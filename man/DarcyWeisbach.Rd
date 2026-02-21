@@ -9,14 +9,14 @@ DarcyWeisbach(fD, density, velocity, D)
 \arguments{
 \item{fD}{Darcy friction factor}
 
-\item{density}{density}
+\item{density}{density (kg/m3)}
 
-\item{velocity}{velocity}
+\item{velocity}{velocity (m/s)}
 
-\item{D}{pipe diameter}
+\item{D}{pipe diameter (m)}
 }
 \value{
-dP per unit length
+dP per unit length (Pa/m)
 }
 \description{
 Darcy-Weisbach equation

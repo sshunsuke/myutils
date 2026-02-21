@@ -6,6 +6,16 @@
 \usage{
 fD_Colebrook(roughness, D, Re, tol = 1e-08, itMax = 10, warn = TRUE)
 }
+\arguments{
+\item{roughness}{roughness (m)}
+
+\item{D}{diameter (m)}
+
+\item{Re}{Reynolds number}
+}
+\value{
+Darcy friction factor
+}
 \description{
 Colebrook correlation to calculate Darcy friction factor
 }

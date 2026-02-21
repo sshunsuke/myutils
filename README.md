@@ -1,4 +1,4 @@
-# RMyUtilities
+# myutils
 
 ## Installing 
 
