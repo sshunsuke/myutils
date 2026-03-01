@@ -4,6 +4,10 @@
 NULL
 
 
+# prefix
+#   p - plot
+#   v - vector
+
 # ***********************************
 # IO Clipboard ----
 # ***********************************
@@ -43,8 +47,9 @@ wcbmat <- function(data, header, sep="\t", size=128, row.names=FALSE, qmethod="d
                      col.names=col.names, qmethod=qmethod, ...)
 }
 
-
+# * * * * * * * * * * * * * * * ----
 # Data ----
+# * * * * * * * * * * * * * * *
 
 #' Get the closest value(s) to `target`
 #' @param v      a vector
@@ -59,12 +64,76 @@ v_indexClosestValue <- function(v, target) {
   which( diff == min(diff) )
 }
 
+#' Create a matrix of information of cumulative distribution.
+#'
+#' If you want to create a graph of cumulative distribution, you should use
+#' ecdf() function.
+#'   > fCP <- ecdf( c(3,76,58,24,100,1) ); plot(fCP)
+#'
+#' @param values     vector
+#' @param decreasing If TRUE, the values are ordered from largest to smallest (optional)
+#' @return           matrix
+#' @export
+v_cum_probability = function(values, decreasing=FALSE) {
+  len <- length(values)
+  cbind(X = sort(values, decreasing=decreasing), cum.prob = (1:len)/len)
+}
+
+v_cp_guessX = function(cp_mat, cp) {
+  diff_cp = abs(cp_mat[,"cum.prob"] - cp)
+
+  rn = which(diff_cp == min(diff_cp))
+  if (min(diff_cp) == 0) {
+    return( as.numeric(cp_mat[rn,"X"]) )
+  }
+
+  if (length(rn) == 1) {
+    rn2 = ifelse(cp_mat[rn,"cum.prob"] > cp, rn-1, rn+1)
+  } else if (length(rn) == 2) {
+    rn2 = rn[2]
+    rn = rn[1]
+  } else {
+    stop()
+  }
+
+  p = sort(cp_mat[rn:rn2,"cum.prob"])
+  x = sort(cp_mat[rn:rn2,"X"])
+
+  x[1] + (x[2] - x[1]) * (cp - p[1]) / (p[2] - p[1])
+}
+
+# ***************
+# Matrix
+# ***************
+
+#' Reverse an order of columns of a matrix
+#' @export
+m_crev <- function(mat) {
+  if (!is.matrix(mat)) { stop("mat is not a matrix") }
+  mat[,ncol(mat):1]
+}
+
+#' Reverse an order of rows of a matrix
+#' @export
+m_rrev <- function(mat) {
+  if (!is.matrix(mat)) { stop("mat is not a matrix") }
+  mat[nrow(mat):1,]
+}
+
+# ***************
+# * Data Frame
+# ***************
+df_orderBy <- function(df, colname, decreasing=FALSE) {
+  if (missing(colname)) { stop("'colname' is not specified.") }
+  df[order(df[,colname], decreasing=decreasing),]
+}
 
 
 
 
-
+# * * * * * * * * * * * * * * * ----
 # Plot (p) ----
+# * * * * * * * * * * * * * * *
 
 core_col32 <- function(col, alpha) {
   rgb_ = col2rgb(col, alpha=TRUE)
@@ -78,10 +147,58 @@ core_col32 <- function(col, alpha) {
 #' @param alphas vector of alpha levels (from 0 to 255) [optional]
 #' @return       vector of color codes
 #' @export
-col32 <- function(cols, alphas) {
+p_col32 <- function(cols, alphas) {
   if (missing(alphas)) { alphas = -1 }
   mapply(core_col32, cols, alphas, USE.NAMES=FALSE)
 }
+
+#' convert a value to a hex color with a color pallet
+#' @export
+p_value2col <- function(v, vmin, vmax, f_pal=heat.colors, n = 256, log10_scale = FALSE) {
+  # 範囲チェック
+  if (any(v < vmin | v > vmax, na.rm = TRUE)) {
+    stop("some values are out of range")
+  }
+
+  if (log10_scale && (vmin <= 0 || vmax <= 0)) {
+    stop("log10 scale requires vmin > 0 and vmax > 0")
+  }
+
+  pal = f_pal(n)
+  #pal <- heat.colors(n)
+  #pal <- hcl.colors(n, palette = "Temps", alpha = NULL, rev = FALSE, fixup = TRUE)
+
+  # Normalize
+  if (!log10_scale) {
+    # linear scale
+    t <- (v - vmin) / (vmax - vmin)
+  } else {
+    # log10 scale
+    t <- (log10(v) - log10(vmin)) /
+      (log10(vmax) - log10(vmin))
+  }
+
+  # インデックス化
+  idx <- round(t * (n - 1)) + 1
+
+  pal[idx]
+}
+
+
+## templates ----
+
+#' Create a Excel-like blank plot
+#'
+#' @param xRange,yRange ranges of plot
+#'
+#' @export
+p_blank_excel <- function(xRange, yRange, xlab="", ylab="", cex.axis=1.25, cex.lab=1.25) {
+  plot(xRange, yRange, type="n", tck=0.03, xaxs='i', yaxs='i', las=1,
+       xlab=xlab, ylab=ylab, cex.axis=cex.axis, cex.lab=cex.lab)
+}
+
+
+## draw error bar(s) ----
 
 #' Add a error bar
 #' @param x0,y0  coordinates of points from which to draw

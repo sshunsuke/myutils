@@ -1,7 +1,7 @@
 Package: myutils
 Type: Package
 Title: MyRUtilities
-Version: 0.0.2
+Version: 0.0.4
 Author: Shunsuke
 Maintainer: The package maintainer <s_shunske@yahoo.co.jp>
 Description: My R Utilities

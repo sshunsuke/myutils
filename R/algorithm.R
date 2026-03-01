@@ -6,7 +6,7 @@
 #'
 #' @param fun  function returning a real value
 #' @param dFun derivative of `fun`
-#' @param x_0 initial value of the argument of `fun`
+#' @param x_0  initial value of the argument of `fun`
 #' @param tol  desired accuracy (convergence tolerance)
 #' @param itMax the maximum number of iterations
 #' @return root of `fun`
@@ -81,9 +81,16 @@ bisection <- function(f, rangeFrom, rangeTo, itMax = 100, tol = 1e-7) {
 
 
 
-# Greatest common divisor & Least Common Multiple ----
+# Math  ----
 
-## m_gcd  ----
+
+
+
+
+
+## Greatest common divisor & Least Common Multiple ----
+
+## math_gcd  ----
 
 #' Calculate greatest common divisor by using Euclidean algorithm
 #'
@@ -91,7 +98,7 @@ bisection <- function(f, rangeFrom, rangeTo, itMax = 100, tol = 1e-7) {
 #' @param b a natural number
 #' @return greatest common divisor
 #' @export
-m_gcd <- (function(){
+math_gcd <- (function(){
   function(...){ Reduce(function(a, b){
     while(a %% b != 0){
       tmp <- b
@@ -103,7 +110,7 @@ m_gcd <- (function(){
   }, c(...)) }
 })()
 
-## m_lcm ----
+## math_lcm ----
 
 
 #' Least Common Multiple
@@ -111,8 +118,12 @@ m_gcd <- (function(){
 #' @param b a natural number
 #' @return least common multiple
 #' @export
-m_lcm <- (function(){
+math_lcm <- (function(){
   function(...){ Reduce(function(a, b){
-    a * b / m_gcd(a,b)
+    a * b / math_gcd(a,b)
   }, c(...)) }
 })()
+
+
+
+

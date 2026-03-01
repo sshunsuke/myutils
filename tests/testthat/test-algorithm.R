@@ -3,5 +3,5 @@ test_that("multiplication works", {
 })
 
 test_that("col32", {
-  expect_equal(col32(c("#123456", "red"), c(0,128)), c("#12345600", "#FF000080"))
+  expect_equal(p_col32(c("#123456", "red"), c(0,128)), c("#12345600", "#FF000080"))
 })
