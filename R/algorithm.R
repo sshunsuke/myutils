@@ -83,7 +83,7 @@ bisection <- function(f, rangeFrom, rangeTo, itMax = 100, tol = 1e-7) {
 
 # Greatest common divisor & Least Common Multiple ----
 
-## gcd  ----
+## m_gcd  ----
 
 #' Calculate greatest common divisor by using Euclidean algorithm
 #'
@@ -91,7 +91,7 @@ bisection <- function(f, rangeFrom, rangeTo, itMax = 100, tol = 1e-7) {
 #' @param b a natural number
 #' @return greatest common divisor
 #' @export
-gcd <- (function(){
+m_gcd <- (function(){
   function(...){ Reduce(function(a, b){
     while(a %% b != 0){
       tmp <- b
@@ -103,7 +103,7 @@ gcd <- (function(){
   }, c(...)) }
 })()
 
-## lcm ----
+## m_lcm ----
 
 
 #' Least Common Multiple
@@ -111,8 +111,8 @@ gcd <- (function(){
 #' @param b a natural number
 #' @return least common multiple
 #' @export
-lcm_ <- (function(){
+m_lcm <- (function(){
   function(...){ Reduce(function(a, b){
-    a * b / myutils:::gcd(a,b)
+    a * b / m_gcd(a,b)
   }, c(...)) }
 })()

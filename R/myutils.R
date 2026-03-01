@@ -11,7 +11,7 @@ NULL
 #' Read clipboard as a data frame by using `utils::read.table()`
 #'
 #' @param header If TRUE, retrieved data contains a header
-#' @return A data frame containing clipboard data
+#' @return       A data frame containing clipboard data
 #'
 #' @export
 #' @md
@@ -44,7 +44,27 @@ wcbmat <- function(data, header, sep="\t", size=128, row.names=FALSE, qmethod="d
 }
 
 
-# Plot ----
+# Data ----
+
+#' Get the closest value(s) to `target`
+#' @param v      a vector
+#' @param target a number
+#' @return       closest value(s) to `target`
+v_closestValue <- function(v, target) {
+  unique( v[ v_indexClosestValue(v, target) ] )
+}
+
+v_indexClosestValue <- function(v, target) {
+  diff <- abs(v - target)
+  which( diff == min(diff) )
+}
+
+
+
+
+
+
+# Plot (p) ----
 
 core_col32 <- function(col, alpha) {
   rgb_ = col2rgb(col, alpha=TRUE)
@@ -60,7 +80,7 @@ core_col32 <- function(col, alpha) {
 #' @export
 col32 <- function(cols, alphas) {
   if (missing(alphas)) { alphas = -1 }
-  mapply(myutils:::core_col32, cols, alphas, USE.NAMES=FALSE)
+  mapply(core_col32, cols, alphas, USE.NAMES=FALSE)
 }
 
 #' Add a error bar
