@@ -25,6 +25,12 @@ wcbmat(
 \item{size}{clipboard size}
 
 \item{row.names}{yy}
+
+\item{qmethod}{description}
+
+\item{col.names}{description}
+
+\item{...}{optionals}
 }
 \description{
 Copy table data to clipboard with \code{utils::write.table()}

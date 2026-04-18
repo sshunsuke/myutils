@@ -6,6 +6,11 @@
 \usage{
 read.matrix(csvfile, skip = 0)
 }
+\arguments{
+\item{csvfile}{path of a csvfile}
+
+\item{skip}{number of lines}
+}
 \description{
 Read matrix data from a csv file.
 }

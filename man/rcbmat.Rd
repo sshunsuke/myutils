@@ -8,6 +8,8 @@ rcbmat(header, ...)
 }
 \arguments{
 \item{header}{If TRUE, retrieved data contains a header}
+
+\item{...}{optionals}
 }
 \value{
 \if{html}{\out{<div class="sourceCode">}}\preformatted{  A data frame containing clipboard data

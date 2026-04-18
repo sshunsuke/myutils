@@ -38,8 +38,11 @@ newtonRaphson = function(fun, dFun, x_0, tol=1e-10, itMax=10) {
 #' Bisection Method
 #' @param f  function returning a real value
 #' @param rangeFrom minimum value of range
-#' @param rangeFrom maximum value of range
+#' @param rangeTo maximum value of range
+#' @param itMax maximum number of iterations
+#' @param tol  tolerance
 #' @return root
+#' 
 bisection <- function(f, rangeFrom, rangeTo, itMax = 100, tol = 1e-7) {
   # Check arguments.
   if (rangeFrom >= rangeTo) {
@@ -96,6 +99,7 @@ bisection <- function(f, rangeFrom, rangeTo, itMax = 100, tol = 1e-7) {
 #'
 #' @param a a natural number
 #' @param b a natural number
+#' @param ... optionals
 #' @return greatest common divisor
 #' @export
 math_gcd <- (function(){
@@ -116,6 +120,7 @@ math_gcd <- (function(){
 #' Least Common Multiple
 #' @param a a natural number
 #' @param b a natural number
+#' @param ... optionals
 #' @return least common multiple
 #' @export
 math_lcm <- (function(){

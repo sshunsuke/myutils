@@ -15,6 +15,10 @@ p_blank_excel(
 }
 \arguments{
 \item{xRange, yRange}{ranges of plot}
+
+\item{xlab, ylab}{label names}
+
+\item{cex.axis, cex.lab}{cexs of axis and lab}
 }
 \description{
 Create a Excel-like blank plot

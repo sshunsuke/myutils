@@ -6,6 +6,9 @@
 \usage{
 m_rrev(mat)
 }
+\arguments{
+\item{mat}{matrix}
+}
 \description{
 Reverse an order of rows of a matrix
 }

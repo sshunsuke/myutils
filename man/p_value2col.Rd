@@ -12,6 +12,10 @@ p_value2col(v, vmin, vmax, f_pal = heat.colors, n = 256, log10_scale = FALSE)
 \item{vmin, vmax}{minimum and maximum of `v`}
 
 \item{f_pal}{color pallet (function)}
+
+\item{n}{number of steps}
+
+\item{log10_scale}{xxx}
 }
 \description{
 Convert a value to a hex color with a color pallet

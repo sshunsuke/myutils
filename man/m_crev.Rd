@@ -6,6 +6,9 @@
 \usage{
 m_crev(mat)
 }
+\arguments{
+\item{mat}{matrix}
+}
 \description{
 Reverse an order of columns of a matrix
 }

@@ -14,6 +14,8 @@ CD_sphere(d_s, v_f, rho_f, mu_f, retall = FALSE)
 \item{rho_f}{density of fluid - kg/m3}
 
 \item{mu_f}{fluid viscosity - Pa-s}
+
+\item{retall}{description}
 }
 \description{
 Drag coefficient of a spherical object

@@ -21,6 +21,7 @@ fD_laminar <- function(Re) { 64 / Re }
 
 #' Blasius correlation to calculate Darcy friction factor
 #' @param Re Reynolds number
+#' @param C  constant
 #' @return   Darcy friction factor
 #' @export
 fD_Blasius <- function(Re, C=0.3164) { C / (Re ^ 0.25) }
@@ -29,6 +30,9 @@ fD_Blasius <- function(Re, C=0.3164) { C / (Re ^ 0.25) }
 #' @param roughness roughness (m)
 #' @param D         diameter (m)
 #' @param Re        Reynolds number
+#' @param tol       tolerance
+#' @param itMax     maximum number of iterations
+#' @param warn      If TRUE, show warnings
 #' @return          Darcy friction factor
 #' @export
 fD_Colebrook <- function(roughness, D, Re, tol=1e-8, itMax=10, warn=TRUE) {

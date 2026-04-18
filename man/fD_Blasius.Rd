@@ -8,6 +8,8 @@ fD_Blasius(Re, C = 0.3164)
 }
 \arguments{
 \item{Re}{Reynolds number}
+
+\item{C}{constant}
 }
 \value{
 Darcy friction factor

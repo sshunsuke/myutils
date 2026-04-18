@@ -12,6 +12,12 @@ fD_Colebrook(roughness, D, Re, tol = 1e-08, itMax = 10, warn = TRUE)
 \item{D}{diameter (m)}
 
 \item{Re}{Reynolds number}
+
+\item{tol}{tolerance}
+
+\item{itMax}{maximum number of iterations}
+
+\item{warn}{If TRUE, show warnings}
 }
 \value{
 Darcy friction factor

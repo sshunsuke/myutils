@@ -7,6 +7,8 @@
 math_gcd(...)
 }
 \arguments{
+\item{...}{optionals}
+
 \item{a}{a natural number}
 
 \item{b}{a natural number}

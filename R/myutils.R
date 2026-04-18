@@ -15,6 +15,7 @@ NULL
 #' Read clipboard as a data frame by using `utils::read.table()`
 #'
 #' @param header If TRUE, retrieved data contains a header
+#' @param ...    optionals
 #' @return       A data frame containing clipboard data
 #'
 #' @export
@@ -31,6 +32,9 @@ rcbmat <- function(header, ...) {
 #' @param sep the field separator string
 #' @param size clipboard size
 #' @param row.names yy
+#' @param qmethod description
+#' @param col.names description
+#' @param ...    optionals
 #'
 #' @export
 #' @md
@@ -52,6 +56,8 @@ wcbmat <- function(data, header, sep="\t", size=128, row.names=FALSE, qmethod="d
 # * * * * * * * * * * * * * * *
 
 #' Read matrix data from a csv file.
+#' @param csvfile path of a csvfile
+#' @param skip    number of lines 
 #' @export
 read.matrix <- function(csvfile, skip=0) {
   csv = read.csv(filename, header=FALSE, skip=skip)
@@ -117,6 +123,7 @@ v_cp_guessX = function(cp_mat, cp) {
 # ***************
 
 #' Reverse an order of columns of a matrix
+#' @param mat matrix
 #' @export
 m_crev <- function(mat) {
   if (!is.matrix(mat)) { stop("mat is not a matrix") }
@@ -124,6 +131,7 @@ m_crev <- function(mat) {
 }
 
 #' Reverse an order of rows of a matrix
+#' @param mat matrix
 #' @export
 m_rrev <- function(mat) {
   if (!is.matrix(mat)) { stop("mat is not a matrix") }
@@ -166,6 +174,8 @@ p_col32 <- function(cols, alphas) {
 #' @param v          vector of value(s)
 #' @param vmin,vmax  minimum and maximum of `v`
 #' @param f_pal      color pallet (function)
+#' @param n          number of steps
+#' @param log10_scale xxx
 #'
 #' @export
 p_value2col <- function(v, vmin, vmax, f_pal=heat.colors, n = 256, log10_scale = FALSE) {
@@ -201,9 +211,53 @@ p_value2col <- function(v, vmin, vmax, f_pal=heat.colors, n = 256, log10_scale =
 
 ## templates ----
 
+
+#' Create a blank plot
+#' @param xRange,yRange    Ranges of plot
+#' @param axes             Draw axes when TRUE
+#' @param log              a character string ("", "x", "y", or "xy")
+#' @param xlab,ylab        Label name of x or y axis
+#' @param main             Overall title
+#' @param xaxs,yaxs        Extra space
+#' @param las              the style of axis labels (default = 1)
+#' @param cex.axis         Font size of axis annotation (relative to the current setting of cex)
+#' @param cex.lab          Font size of labels
+#' @export
+p_blank <- function(xRange, yRange, axes=TRUE, log="", xlab="", ylab="", main="", 
+                    xaxs='r', yaxs='r', las=0, cex.axis=1, cex.lab=1) {
+  
+  plot(xRange, yRange, type='n', log=log, xlab=xlab, ylab=ylab, main=main, 
+       xaxs=xaxs, yaxs=yaxs, xaxt="n", yaxt="n", cex.lab=cex.lab)
+  if (axes) { axis(1, cex.axis=cex.axis); axis(2, las=las, cex.axis=cex.axis) }
+}
+
+#' Blank plot with axes that fits within the original data range
+#' @param xRange,yRange    Ranges of plot
+#' @param axes             Draw axes when TRUE
+#' @param log              a character string ("", "x", "y", or "xy")
+#' @param xlab,ylab        Label name of x or y axis
+#' @param main             Overall title
+#' @param las              the style of axis labels (default = 1)
+#' @param cex.axis         Font size of axis annotation (relative to the current setting of cex)
+#' @param cex.lab          Font size of labels
+#' @export
+p_blank_fit <- function(xRange, yRange, axes=TRUE, log="", xlab="", ylab="", main="",
+                        las=1, cex.axis=1.25, cex.lab=1) {
+  p_blank(xRange, yRange, axes=axes, log=log, xlab=xlab, ylab=ylab, main=main, 
+          xaxs='i', yaxs='i', las=las, cex.axis=cex.axis, cex.lab=cex.lab)
+  
+  #plot(xRange, yRange, type='n', xaxs='i', yaxs='i', xaxt="n", yaxt="n",
+  #     main=main, xlab=xlab, ylab=ylab, cex.lab=cex.lab)
+  #if (axes) { axis(1, cex.axis=cex.axis); axis(2, las=las, cex.axis=cex.axis) }
+}
+
+
+
 #' Create a Excel-like blank plot
 #'
 #' @param xRange,yRange ranges of plot
+#' @param xlab,ylab     label names
+#' @param cex.axis,cex.lab cexs of axis and lab
 #'
 #' @export
 p_blank_excel <- function(xRange, yRange, xlab="", ylab="", cex.axis=1.25, cex.lab=1.25) {
@@ -211,25 +265,14 @@ p_blank_excel <- function(xRange, yRange, xlab="", ylab="", cex.axis=1.25, cex.l
        xlab=xlab, ylab=ylab, cex.axis=cex.axis, cex.lab=cex.lab)
 }
 
-#' Blank plot with axes that fits within the original data range
-#' @param xRange,yRange ranges of plot
-#' @param axes          Draw axes when TRUE
-#' @param xlab,ylab     Label name of x or y axis
-#' @param main          Overall title
-#' @export
-p_blank_fit <- function(xRange, yRange, axes=TRUE, xlab="", ylab="", main="",
-                        las=1, cex.axis=1.25) {
-  plot(xRange, yRange, type='n', xaxs='i', yaxs='i', xaxt="n", yaxt="n",
-       main=main, xlab=xlab, ylab=ylab)
-  if (axes) { axis(1, cex.axis=cex.axis); axis(2, las=las, cex.axis=cex.axis) }
-}
+
 
 
 ## draw error bar(s) ----
 
 #' Add a error bar
 #' @param x0,y0  coordinates of points from which to draw
-#' @param x0,y1  coordinates of points to which to draw. At least one must the supplied
+#' @param x1,y1  coordinates of points to which to draw. At least one must the supplied
 #' @param col    color of error bar
 #' @param length length of the edges of the error bar (in inches)
 p_errorBar <- function(x0, y0, x1, y1, col="black", length=0.1) {

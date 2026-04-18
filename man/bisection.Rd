@@ -9,7 +9,13 @@ bisection(f, rangeFrom, rangeTo, itMax = 100, tol = 1e-07)
 \arguments{
 \item{f}{function returning a real value}
 
-\item{rangeFrom}{maximum value of range}
+\item{rangeFrom}{minimum value of range}
+
+\item{rangeTo}{maximum value of range}
+
+\item{itMax}{maximum number of iterations}
+
+\item{tol}{tolerance}
 }
 \value{
 root

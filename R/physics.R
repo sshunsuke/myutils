@@ -59,10 +59,11 @@ FD <- function(CD, rho_f, v, A_ref) {
 
 #' Drag coefficient of a spherical object
 #' 
-#' @param d_s   diameter of a sphere - m
-#' @param v_f   velocity - m/s
-#' @param rho_f density of fluid - kg/m3
-#' @param mu_f  fluid viscosity - Pa-s
+#' @param d_s    diameter of a sphere - m
+#' @param v_f    velocity - m/s
+#' @param rho_f  density of fluid - kg/m3
+#' @param mu_f   fluid viscosity - Pa-s
+#' @param retall description
 #' 
 #' @export
 CD_sphere <- function(d_s, v_f, rho_f, mu_f, retall=FALSE) {
