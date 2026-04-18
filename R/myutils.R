@@ -51,6 +51,16 @@ wcbmat <- function(data, header, sep="\t", size=128, row.names=FALSE, qmethod="d
 # Data ----
 # * * * * * * * * * * * * * * *
 
+#' Read matrix data from a csv file.
+#' @export
+read.matrix <- function(csvfile, skip=0) {
+  csv = read.csv(filename, header=FALSE, skip=skip)
+  x = csv[-1,1]
+  y = as.numeric(csv[1,-1])
+  z = csv[-1,-1]
+  list(x=x, y=y, z=z, csv=csv)
+}
+
 #' Get the closest value(s) to `target`
 #' @param v      a vector
 #' @param target a number
@@ -152,7 +162,11 @@ p_col32 <- function(cols, alphas) {
   mapply(core_col32, cols, alphas, USE.NAMES=FALSE)
 }
 
-#' convert a value to a hex color with a color pallet
+#' Convert a value to a hex color with a color pallet
+#' @param v          vector of value(s)
+#' @param vmin,vmax  minimum and maximum of `v`
+#' @param f_pal      color pallet (function)
+#'
 #' @export
 p_value2col <- function(v, vmin, vmax, f_pal=heat.colors, n = 256, log10_scale = FALSE) {
   # 範囲チェック
@@ -195,6 +209,19 @@ p_value2col <- function(v, vmin, vmax, f_pal=heat.colors, n = 256, log10_scale =
 p_blank_excel <- function(xRange, yRange, xlab="", ylab="", cex.axis=1.25, cex.lab=1.25) {
   plot(xRange, yRange, type="n", tck=0.03, xaxs='i', yaxs='i', las=1,
        xlab=xlab, ylab=ylab, cex.axis=cex.axis, cex.lab=cex.lab)
+}
+
+#' Blank plot with axes that fits within the original data range
+#' @param xRange,yRange ranges of plot
+#' @param axes          Draw axes when TRUE
+#' @param xlab,ylab     Label name of x or y axis
+#' @param main          Overall title
+#' @export
+p_blank_fit <- function(xRange, yRange, axes=TRUE, xlab="", ylab="", main="",
+                        las=1, cex.axis=1.25) {
+  plot(xRange, yRange, type='n', xaxs='i', yaxs='i', xaxt="n", yaxt="n",
+       main=main, xlab=xlab, ylab=ylab)
+  if (axes) { axis(1, cex.axis=cex.axis); axis(2, las=las, cex.axis=cex.axis) }
 }
 
 

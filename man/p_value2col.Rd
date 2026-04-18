@@ -2,10 +2,17 @@
 % Please edit documentation in R/myutils.R
 \name{p_value2col}
 \alias{p_value2col}
-\title{convert a value to a hex color with a color pallet}
+\title{Convert a value to a hex color with a color pallet}
 \usage{
 p_value2col(v, vmin, vmax, f_pal = heat.colors, n = 256, log10_scale = FALSE)
 }
+\arguments{
+\item{v}{vector of value(s)}
+
+\item{vmin, vmax}{minimum and maximum of `v`}
+
+\item{f_pal}{color pallet (function)}
+}
 \description{
-convert a value to a hex color with a color pallet
+Convert a value to a hex color with a color pallet
 }
