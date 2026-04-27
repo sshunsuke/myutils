@@ -37,3 +37,6 @@ p_blank_fit(
 \description{
 Blank plot with axes that fits within the original data range
 }
+\seealso{
+[p_blank()]
+}

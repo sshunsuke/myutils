@@ -17,3 +17,8 @@ vector of color codes
 \description{
 Add alpha level to color
 }
+\examples{
+cc <- p_col32(c("#123456", "red"), c(96,128))
+cat(cc)   # #12345660 #FF000080
+
+}

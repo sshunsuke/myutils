@@ -4,20 +4,10 @@
 \alias{p_blank}
 \title{Create a blank plot}
 \usage{
-p_blank(
-  xRange,
-  yRange,
-  axes = TRUE,
-  log = "",
-  xlab = "",
-  ylab = "",
-  main = "",
-  xaxs = "r",
-  yaxs = "r",
-  las = 0,
-  cex.axis = 1,
-  cex.lab = 1
-)
+p_blank(xRange, yRange)
+p_blank(xRange, yRange, FALSE)     # no axes
+p_blank(xRange, yRange, log="xy")  # log scale 
+p_blank(xRange, yRange, xlab="x", ylab="y", main="title")
 }
 \arguments{
 \item{xRange, yRange}{Ranges of plot}

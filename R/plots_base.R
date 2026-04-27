@@ -1,4 +1,4 @@
-# * * * * * * * * * * * * * * * ----
+# * * * * * * * * * * * * * * * 
 # Plot (p) ----
 # このファイルだけプロジェクトに追加すれば機能する
 # * * * * * * * * * * * * * * *
@@ -16,6 +16,11 @@ p_core_col32_ <- function(col, alpha) {
 #' @param cols   vector of color name or hex (e.g. red, #123456)
 #' @param alphas vector of alpha levels (from 0 to 255) [optional]
 #' @return       vector of color codes
+#' 
+#' @examples
+#' cc <- p_col32(c("#123456", "red"), c(96,128))
+#' cat(cc)   # #12345660 #FF000080
+#' 
 #' @export
 p_col32 <- function(cols, alphas) {
   if (missing(alphas)) { alphas = -1 }
@@ -60,8 +65,9 @@ p_value2col <- function(v, vmin, vmax, f_pal=heat.colors, n = 256, log10_scale =
   pal[idx]
 }
 
-
+## * * * * * * * * * * ----
 ## Templates ----
+## * * * * * * * * * * 
 
 
 #' Create a blank plot
@@ -74,6 +80,12 @@ p_value2col <- function(v, vmin, vmax, f_pal=heat.colors, n = 256, log10_scale =
 #' @param las              the style of axis labels (default = 1)
 #' @param cex.axis         Font size of axis annotation (relative to the current setting of cex)
 #' @param cex.lab          Font size of labels
+#' 
+#' @usage p_blank(xRange, yRange)
+#' p_blank(xRange, yRange, FALSE)     # no axes
+#' p_blank(xRange, yRange, log="xy")  # log scale 
+#' p_blank(xRange, yRange, xlab="x", ylab="y", main="title")
+#' 
 #' @export
 p_blank <- function(xRange, yRange, axes=TRUE, log="", xlab="", ylab="", main="", 
                     xaxs='r', yaxs='r', las=0, cex.axis=1, cex.lab=1) {
@@ -91,6 +103,8 @@ p_blank <- function(xRange, yRange, axes=TRUE, log="", xlab="", ylab="", main=""
 #' @param las              the style of axis labels (default = 1)
 #' @param cex.axis         Font size of axis annotation (relative to the current setting of cex)
 #' @param cex.lab          Font size of labels
+#' 
+#' @seealso [p_blank()]
 #' @export
 p_blank_fit <- function(xRange, yRange, axes=TRUE, log="", xlab="", ylab="", main="",
                         las=1, cex.axis=1.25, cex.lab=1) {
@@ -111,7 +125,9 @@ p_blank_excel <- function(xRange, yRange, xlab="", ylab="", cex.axis=1.25, cex.l
 }
 
 
-## draw error bar(s) ----
+## * * * * * * * * * * ----
+## Error bar(s) ----
+## * * * * * * * * * * 
 
 #' Add a error bar
 #' @param x0,y0  coordinates of points from which to draw
@@ -146,10 +162,22 @@ p_errorBarY <- function(x, y, err, col="black", length=0.1) {
 
 ## Polygon   ----
 
+#' Highlight a region defined by upper and lower limits of profile data
+#' @param x x (vector)
+#' @param y_upper,y_lower upper and lower limits of y (vector)
+#' @param col color of the highlighted region [optional]
+#' @param lty type of the border line [optional]
+#' 
+#' @export
 p_polygon_upper_lower <- function(x, y_upper, y_lower, col="#00000028", lty=0) {
   polygon(c(x, rev(x)), c(y_upper, rev(y_lower)), col=col, lty=lty)
 }
 
+#' Highlight a region within a specific error
+#' @param x,y vector of x or y
+#' @param err_percentage percentage of error
+#' @param lty type of the border line [optional]
+#' @export
 p_polygon_error <- function(x, y, err_percentage, col="#00000028", lty=0) {
   y_upper = y * (100 + err_percentage) / 100
   y_lower = y * (100 - err_percentage) / 100
@@ -157,7 +185,37 @@ p_polygon_error <- function(x, y, err_percentage, col="#00000028", lty=0) {
 }
 
 
-## Examples  ----
+## * * * * * * * * * * ----
+## Examples            ----
+## * * * * * * * * * * 
+
+p_ex_legend_text <- function() {
+  x <- c(0, 6, 9, 10, 20)
+  y1 <- c(5, 7, 3, 8, 2)
+  y2 <- c(15, 11, 13, 19, 7)
+  y3 <- c(24, 21, 27, 1, 15)
+  
+  xRange <- c(0, 20)
+  yRange <- c(0, 30)
+  
+  # 空のグラフ
+  plot(xRange, yRange, type = 'n', main="Scatter 2 (multi-data)", xlab="x", ylab="y")
+  
+  # 格子の線を引く場合  (大雑把で良ければ、grid(5,5) みたいな感じでよい)
+  abline(v = 0:4*5, h = 0:6*5, col = "gray", lty = 2, lwd = 0.7)
+  
+  # 実データをプロット
+  lines(x, y1, col="black", lty=1, lwd=4)
+  lines(x, y2, col="red",   lty=2, lwd=3)
+  lines(x, y3, col="blue",  lty=3, lwd=2)
+  
+  # 凡例を入れる
+  legend(15, 25, c("A", "B", "C"), lty=c(1, 2, 3), lwd=c(4, 3, 2),
+         col=c("black", "red", "blue"), bg="white")
+  
+  # 説明テキスト
+  text(15, 26, "Text", adj=0, font=2, cex=0.9, col="#0080FF" )
+}
 
 p_ex_timeline <- function() {
   x <- as.POSIXct( c("2012-02-12 10:0:0", "2012-02-12 12:30:0", "2012-02-12 15:0:0", "2012-02-12 20:0:0") )
