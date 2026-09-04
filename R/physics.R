@@ -68,9 +68,21 @@ FD <- function(CD, rho_f, v, A_ref) {
 #' @export
 CD_sphere <- function(d_s, v_f, rho_f, mu_f, retall=FALSE) {
   Re_p <- d_s * v_f * rho_f / mu_f
+  
+  # Clift & Gauvin (1971)
+  CD <- 24/Re_p * (1 + 0.15* Re_p^0.687) + 0.42 / (1+4.25*10^4 * Re_p^(-1.16))  
+  
+  if (retall) {
+    CD <- list(CD=CD, Re_p=Re_p)
+  }
+  CD
+}
+
+CD_sphere_PH <- function(d_s, v_f, rho_f, mu_f, retall=FALSE) {
+  Re_p <- d_s * v_f * rho_f / mu_f
 
   CD_l <- 24 / Re_p                # laminar (Stokes)
-  CD_i <- 18.5 / (Re_p^0.8)
+  CD_i <- 18.5 / (Re_p^0.6)        # (Pan & Hanratty)
   CD_t <- rep(0.5, length(Re_p))   # turbulent
   
   CD <- ifelse(Re_p < 1.92, CD_l,
@@ -80,5 +92,9 @@ CD_sphere <- function(d_s, v_f, rho_f, mu_f, retall=FALSE) {
   }
   CD
 }
+
+
+
+
 
 
