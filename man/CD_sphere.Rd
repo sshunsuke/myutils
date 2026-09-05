@@ -4,7 +4,7 @@
 \alias{CD_sphere}
 \title{Drag coefficient of a spherical object}
 \usage{
-CD_sphere(d_s, v_f, rho_f, mu_f, retall = FALSE)
+CD_sphere(d_s, v_f, rho_f, mu_f, model = "CG", retall = FALSE)
 }
 \arguments{
 \item{d_s}{diameter of a sphere - m}
@@ -15,8 +15,19 @@ CD_sphere(d_s, v_f, rho_f, mu_f, retall = FALSE)
 
 \item{mu_f}{fluid viscosity - Pa-s}
 
+\item{model}{model ("Stokes", "CG", "Schiller", or "PH")}
+
 \item{retall}{description}
 }
 \description{
 Drag coefficient of a spherical object
+}
+\examples{
+v <- 10^(-10:60/10)
+Re <- (CD_sphere(0.01, v, 1000, 10, retall=TRUE))$Re_p
+plot(Re, CD_sphere(0.01, v, 1000, 10, model="Stokes"), type="l", log="xy", lty=2, ylim=c(0.1,100), ylab="CD")
+lines(Re, CD_sphere(0.01, v, 1000, 10, model="CG"), col="red", lwd=2)
+lines(Re, CD_sphere(0.01, v, 1000, 10, model="Schiller"), col="orange")
+lines(Re, CD_sphere(0.01, v, 1000, 10, model="PH"), col="purple", lwd=2)
+
 }

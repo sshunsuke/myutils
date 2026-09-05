@@ -2,7 +2,7 @@
 % Please edit documentation in R/plots_base.R
 \name{p_col32}
 \alias{p_col32}
-\title{Add alpha level to color}
+\title{Add alpha levels to colors}
 \usage{
 p_col32(cols, alphas)
 }
@@ -15,7 +15,7 @@ p_col32(cols, alphas)
 vector of color codes
 }
 \description{
-Add alpha level to color
+Add alpha levels to colors
 }
 \examples{
 cc <- p_col32(c("#123456", "red"), c(96,128))

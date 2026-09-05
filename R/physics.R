@@ -63,36 +63,41 @@ FD <- function(CD, rho_f, v, A_ref) {
 #' @param v_f    velocity - m/s
 #' @param rho_f  density of fluid - kg/m3
 #' @param mu_f   fluid viscosity - Pa-s
+#' @param model  model ("Stokes", "CG", "Schiller", or "PH")
 #' @param retall description
 #' 
+#' @examples v <- 10^(-10:60/10)
+#' Re <- (CD_sphere(0.01, v, 1000, 10, retall=TRUE))$Re_p
+#' plot(Re, CD_sphere(0.01, v, 1000, 10, model="Stokes"), type="l", log="xy", lty=2, ylim=c(0.1,100), ylab="CD")
+#' lines(Re, CD_sphere(0.01, v, 1000, 10, model="CG"), col="red", lwd=2)
+#' lines(Re, CD_sphere(0.01, v, 1000, 10, model="Schiller"), col="orange")
+#' lines(Re, CD_sphere(0.01, v, 1000, 10, model="PH"), col="purple", lwd=2)
+#' 
 #' @export
-CD_sphere <- function(d_s, v_f, rho_f, mu_f, retall=FALSE) {
-  Re_p <- d_s * v_f * rho_f / mu_f
+CD_sphere <- function(d_s, v_f, rho_f, mu_f, model="CG", retall=FALSE) {
+  Re_p <- d_s * v_f * rho_f / mu_f  # particle Reynolds number 
   
-  # Clift & Gauvin (1971)
-  CD <- 24/Re_p * (1 + 0.15* Re_p^0.687) + 0.42 / (1+4.25*10^4 * Re_p^(-1.16))  
+  if (model == "Stokes") {
+    # laminar (Stokes)
+    CD <- 24 / Re_p
+  } else if (model == "CG") {
+    # Clift & Gauvin (1971)
+    CD <- 24/Re_p * (1 + 0.15* Re_p^0.687) + 0.42 / (1+4.25*10^4 * Re_p^(-1.16))  
+  } else if (model == "Schiller") {
+    # Schiller & Nauman
+    CD <- 24/Re_p * (1 + 0.15* Re_p^0.687)
+  } else if (model == "PH") {
+    # (Pan & Hanratty)
+    CD <- ifelse(Re_p < 1.92, (24/Re_p), 18.5 / (Re_p^0.6))
+  } else {
+    stop("model was not found")
+  }
   
   if (retall) {
     CD <- list(CD=CD, Re_p=Re_p)
   }
   CD
 }
-
-CD_sphere_PH <- function(d_s, v_f, rho_f, mu_f, retall=FALSE) {
-  Re_p <- d_s * v_f * rho_f / mu_f
-
-  CD_l <- 24 / Re_p                # laminar (Stokes)
-  CD_i <- 18.5 / (Re_p^0.6)        # (Pan & Hanratty)
-  CD_t <- rep(0.5, length(Re_p))   # turbulent
-  
-  CD <- ifelse(Re_p < 1.92, CD_l,
-               ifelse(Re_p < 500, CD_i, CD_t))
-  if (retall) {
-    CD <- list(CD=CD, CD_l=CD_l, CD_i=CD_i, CD_t=CD_t, Re_p=Re_p)
-  }
-  CD
-}
-
 
 
 

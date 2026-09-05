@@ -12,13 +12,12 @@ p_core_col32_ <- function(col, alpha) {
          rgb(rgb_[1], rgb_[2], rgb_[3], maxColorValue=255))
 }
 
-#' Add alpha level to color
+#' Add alpha levels to colors
 #' @param cols   vector of color name or hex (e.g. red, #123456)
 #' @param alphas vector of alpha levels (from 0 to 255) [optional]
 #' @return       vector of color codes
 #' 
-#' @examples
-#' cc <- p_col32(c("#123456", "red"), c(96,128))
+#' @examples cc <- p_col32(c("#123456", "red"), c(96,128))
 #' cat(cc)   # #12345660 #FF000080
 #' 
 #' @export
@@ -55,8 +54,7 @@ p_value2col <- function(v, vmin, vmax, f_pal=heat.colors, n = 256, log10_scale =
     t <- (v - vmin) / (vmax - vmin)
   } else {
     # log10 scale
-    t <- (log10(v) - log10(vmin)) /
-      (log10(vmax) - log10(vmin))
+    t <- (log10(v) - log10(vmin)) / (log10(vmax) - log10(vmin))
   }
   
   # インデックス化
